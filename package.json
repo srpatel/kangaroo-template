@@ -1,0 +1,33 @@
+{
+  "name": "kangaroo-template",
+  "version": "1.0.0",
+  "description": "Template for Kangaroo game.",
+  "private": "true",
+  "dependencies": {
+    "pixi.js": "^6.0.0",
+    "pixi-actions": "^1.0.3"
+  },
+  "devDependencies": {
+    "css-loader": "^5.1.1",
+    "rsync": "^0.6.1",
+    "spritesheet-js": "^1.2.6",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.17",
+    "typescript": "^4.2.3",
+    "webpack": "^5.26.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "scripts": {
+    "start": "webpack serve",
+    "prebuild-client": "spritesheet-js -p client/dist -n packed -f pixi.js client/src/assets/pre-pack/*.png",
+    "build-server": "webpack --config webpack.server.config.js --output-library server",
+    "build-client": "webpack --config webpack.client.config.js",
+    "build": "npm run build-server && npm run build-client",
+    "predeploy": "npm run build",
+    "deploy": "node ./deploy.js",
+    "deploy-only": "node ./deploy.js"
+  },
+  "author": "sunil patel",
+  "license": "MIT"
+}

@@ -1,0 +1,10 @@
+{
+	"displayName": "Template",
+	"version": "1.0",
+	
+	"minPlayers": 2,
+	"maxPlayers": 2,
+	
+	"clientFolder": "client/dist",
+	"serverFolder": "server/dist",
+}
