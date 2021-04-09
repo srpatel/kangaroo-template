@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 import { EventEmitter } from '@pixi/utils';
 import { Actions, Interpolations } from 'pixi-actions';
 
+import Session from './Session';
+
 let _spritesheet: PIXI.Spritesheet;
 
 const debug = false;
@@ -17,34 +19,54 @@ export default class Game {
 	width: number = window.innerWidth;
 	height: number = window.innerHeight;
 	
-	constructor(app: PIXI.Application) {
+	static tex(name: string): PIXI.Texture {
+		return _spritesheet.textures[name]
+	}
+	
+	init(app: PIXI.Application) {
 		this.app = app;
 		
 		this.stage = new PIXI.Container();
 		this.app.stage.addChild(this.stage);
 		
-		this.init();
+		const promises = [];
+		// promises.push(new Promise((resolve, reject) => {
+		// 	new PIXI.Loader()
+		// 		.add('Montserrat', './montserrat.fnt')
+		// 		.load(() => {
+		// 			resolve(true);
+		// 		});
+		// }));
+		
+		const data = require('../dist/packed.json');
+		const baseTexture = new PIXI.BaseTexture(data.meta.image);
+		this.spritesheet = new PIXI.Spritesheet(baseTexture, data);
+		promises.push(new Promise((resolve, reject) => {
+			this.spritesheet.parse(() => {
+					resolve(true);
+			});
+		}));
+		
+		Promise.all(promises).then(this.onLoaded.bind(this));
+	}
+	
+	onLoaded() {
+		_spritesheet = this.spritesheet;
+		
+		const sprite = PIXI.Sprite.from(Game.tex("spearman.png"));
+		this.stage.addChild(sprite);
+		
+		this.app.ticker.add((delta: number) => this.tick(delta));
 		
 		this.resize(this.app.renderer.width, this.app.renderer.height);
 	}
 	
-	static tex(name: string): PIXI.Texture {
-		return _spritesheet.textures[name]
+	handleEvent(event: any) {
+		// ...
 	}
 	
-	init() {
-		const data = require('../dist/packed.json');
-		const baseTexture = new PIXI.BaseTexture(data.meta.image);
-		this.spritesheet = new PIXI.Spritesheet(baseTexture, data);
-		this.spritesheet.parse(() => {
-			// finished preparing spritesheet textures
-			_spritesheet = this.spritesheet;
-			
-			const sprite = PIXI.Sprite.from(Game.tex("spearman.png"));
-			this.stage.addChild(sprite);
-			
-			this.app.ticker.add((delta: number) => this.tick(delta));
-		});
+	loadSession(session: Session) {
+		// ...
 	}
 	
 	tick(delta: number) {

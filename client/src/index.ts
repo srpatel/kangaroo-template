@@ -4,6 +4,8 @@ import Game from './Game';
 
 import './style.css';
 
+let game = new Game();
+
 window.onload = function() {
 	const app = new PIXI.Application({ 
 		width: window.innerWidth,
@@ -19,7 +21,7 @@ window.onload = function() {
 	
 	app.renderer.plugins.interaction.interactionFrequency = 60;
 	
-	const game = new Game(app);
+	game.init(app);
 	window.onresize = function(event: Event) {
 		game.resize(
 			window.innerWidth,
@@ -29,3 +31,5 @@ window.onload = function() {
 	
 	document.body.appendChild(app.view);
 };
+
+(window as any).game = game;

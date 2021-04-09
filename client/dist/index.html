@@ -6,5 +6,9 @@
 	</head>
 	<body>
 		<script src="bundle.js"></script>
+		<script>window.KangarooEntryPoint = {
+			handleEvent: game.handleEvent.bind(game),
+			loadSession: game.loadSession.bind(game)
+		};</script>
 	</body>
 </html>
