@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import { EventEmitter } from '@pixi/utils';
 import { Actions, Interpolations } from 'pixi-actions';
 
 import Session from './Session';
@@ -23,7 +22,7 @@ export default class Game {
 		return _spritesheet.textures[name]
 	}
 	
-	init(app: PIXI.Application) {
+	init(app: PIXI.Application, loadCallback?: Function) {
 		this.app = app;
 		
 		this.stage = new PIXI.Container();
@@ -47,7 +46,12 @@ export default class Game {
 			});
 		}));
 		
-		Promise.all(promises).then(this.onLoaded.bind(this));
+		Promise.all(promises).then(() => {
+			this.onLoaded();
+			if (loadCallback) {
+				loadCallback.call(this);
+			}
+		});
 	}
 	
 	onLoaded() {

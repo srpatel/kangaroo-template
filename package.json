@@ -4,10 +4,13 @@
   "description": "Template for Kangaroo game.",
   "private": "true",
   "dependencies": {
+    "@pixi/filter-glow": "^4.0.0",
+    "pixi-actions": "^1.0.3",
     "pixi.js": "^6.0.0",
-    "pixi-actions": "^1.0.3"
+    "underscore": "^1.5.2"
   },
   "devDependencies": {
+    "@types/underscore": "^1.11.2",
     "css-loader": "^5.1.1",
     "rsync": "^0.6.1",
     "spritesheet-js": "^1.2.6",
@@ -20,9 +23,9 @@
   },
   "scripts": {
     "start": "webpack serve --config webpack.client.config.js",
-    "prebuild-client": "spritesheet-js -p client/dist --powerOfTwo --padding 2 -n packed -f pixi.js client/src/assets/pre-pack/*.png",
+    "prebuild-client": "spritesheet-js -p client/dist --powerOfTwo --padding 5 -n packed -f pixi.js client/src/assets/pre-pack/*.png",
     "build-server": "webpack --config webpack.server.config.js --output-library server",
-    "build-client": "webpack --config webpack.client.config.js",
+    "build-client": "webpack --config webpack.client.config.js --env production",
     "build": "npm run build-server && npm run build-client",
     "predeploy": "npm run build",
     "deploy": "node ./deploy.js",
