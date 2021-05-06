@@ -57,6 +57,16 @@ export default class Game {
 		});
 	}
 	
+	get playerId() {
+		const K = (window as any).Kangaroo;
+		return K.playerId;
+	}
+	
+	turn(turn: any, callback: (status: number, response: any, target: any) => void) {
+		const K = (window as any).Kangaroo;
+		K.turn(turn, callback);
+	}
+	
 	onLoaded() {
 		this.loaded = true;
 		
