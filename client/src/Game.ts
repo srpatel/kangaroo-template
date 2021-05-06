@@ -15,6 +15,9 @@ export default class Game {
 	app: PIXI.Application;
 	stage: PIXI.Container;
 	
+	loaded: boolean = false;
+	waitingSession: Session = null;
+	
 	width: number = window.innerWidth;
 	height: number = window.innerHeight;
 	
@@ -55,6 +58,8 @@ export default class Game {
 	}
 	
 	onLoaded() {
+		this.loaded = true;
+		
 		_spritesheet = this.spritesheet;
 		
 		const sprite = PIXI.Sprite.from(Game.tex("spearman.png"));
@@ -63,6 +68,11 @@ export default class Game {
 		this.app.ticker.add((delta: number) => this.tick(delta));
 		
 		this.resize(this.app.renderer.width, this.app.renderer.height);
+		
+		if (this.waitingSession) {
+			this.loadSession(this.waitingSession);
+			this.waitingSession = null;
+		}
 	}
 	
 	handleEvent(event: any) {
@@ -70,6 +80,10 @@ export default class Game {
 	}
 	
 	loadSession(session: Session) {
+		if (! this.loaded) {
+			this.waitingSession = session;
+			return;
+		}
 		// ...
 	}
 	
