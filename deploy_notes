@@ -1,0 +1,8 @@
+1. Upload public key on the developer zone
+	- that adds your key + games to the auth key file
+	- for now, i will do this manually for any people who "want in"
+2. rsync to the server
+	rsync -rvz -e 'ssh -p 64389' client/dist joey@xikka.com:blue/client
+	rsync -rvz -e 'ssh -p 64389' server/dist joey@xikka.com:blue/server
+	rsync -rvz -e 'ssh -p 64389' manifest.json joey@xikka.com:blue/manifest.json
+3. Do POST request to kick unpacking
