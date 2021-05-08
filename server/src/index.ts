@@ -7,7 +7,7 @@ export class Game {
 	 * These will be injected by Kangaroo. Stubs left here for Typescript types.
 	 */
 	static queueEvent(event: any, playerIds: Array<number>): void {}
-	static declareSessionOver(playerIdsToScores: Map<number, number>): void {}
+	static declareSessionOver(playerIdsToScores: {[key: number]: number}): void {}
 	static queueEventToAllButOnePlayer(event: any, player: number): void {}
 	
 	/**

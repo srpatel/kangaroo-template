@@ -102,7 +102,7 @@ Server.queueEventToAllButOnePlayer = function(event: any, player: number): void 
 		localStorage.setItem('eventQueue-' + pid, JSON.stringify(eventQueue));
 	}
 };
-Server.declareSessionOver = function(playerIdsToScores: Map<number, number>): void {
+Server.declareSessionOver = function(playerIdsToScores: {[key: number]: number}): void {
 	alert("Game over!");
 };
 
